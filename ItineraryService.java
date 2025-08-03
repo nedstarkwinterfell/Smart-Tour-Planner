@@ -1,17 +1,27 @@
 package service;
 
-import model.User;
-import java.util.HashMap;
-import java.util.Map;
+import model.Destination;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-public class ExpenseTracker {
-    private Map<String, Double> expenseMap = new HashMap<>();
+public class ItineraryService {
+    private List<Destination> destinations;
 
-    public void addExpense(User user, double amount) {
-        expenseMap.put(user.getUsername(), expenseMap.getOrDefault(user.getUsername(), 0.0) + amount);
+    public ItineraryService(List<Destination> destinations) {
+        this.destinations = destinations;
     }
 
-    public double getTotalExpense(User user) {
-        return expenseMap.getOrDefault(user.getUsername(), 0.0);
+    public List<Destination> generateSurpriseItinerary(int count) {
+        List<Destination> plan = new ArrayList<>();
+        Random rand = new Random();
+        for (int i = 0; i < count && !destinations.isEmpty(); i++) {
+            Destination d = destinations.get(rand.nextInt(destinations.size()));
+            if (!plan.contains(d)) plan.add(d);
+        }
+        return plan;
     }
 }
+}
+
+
